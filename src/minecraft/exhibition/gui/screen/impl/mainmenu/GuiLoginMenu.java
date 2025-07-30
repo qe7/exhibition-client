@@ -245,23 +245,21 @@ public class GuiLoginMenu extends PanoramaScreen {
 
         if (!renderPass && status == Status.SUCCESS && showTimer.delay(300) && !renderUser && Client.getAuthUser() != null) {
             mc.getSoundHandler().stopSound(menuSong);
-            if (Boolean.parseBoolean(System.getProperty("virtueTheme2"))) {
-                Client.virtueFont = new FontRenderer(mc.gameSettings, new ResourceLocation("textures/ascii.png"), mc.getTextureManager(), false);
-                if (mc.gameSettings.language != null) {
-                    mc.fontRendererObj.setUnicodeFlag(mc.isUnicode());
-                    mc.fontRendererObj.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
-                }
-                mc.mcResourceManager.registerReloadListener(Client.virtueFont);
-
-                Client.blockyFont = new FontRenderer(mc.gameSettings, new ResourceLocation("textures/blocky.png"), mc.getTextureManager(), false);
-                if (mc.gameSettings.language != null) {
-                    mc.fontRendererObj.setUnicodeFlag(mc.isUnicode());
-                    mc.fontRendererObj.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
-                }
-                mc.mcResourceManager.registerReloadListener(Client.blockyFont);
-
-                VirtueClickGui.start();
+            Client.virtueFont = new FontRenderer(mc.gameSettings, new ResourceLocation("textures/ascii.png"), mc.getTextureManager(), false);
+            if (mc.gameSettings.language != null) {
+                mc.fontRendererObj.setUnicodeFlag(mc.isUnicode());
+                mc.fontRendererObj.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
             }
+            mc.mcResourceManager.registerReloadListener(Client.virtueFont);
+
+            Client.blockyFont = new FontRenderer(mc.gameSettings, new ResourceLocation("textures/blocky.png"), mc.getTextureManager(), false);
+            if (mc.gameSettings.language != null) {
+                mc.fontRendererObj.setUnicodeFlag(mc.isUnicode());
+                mc.fontRendererObj.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
+            }
+            mc.mcResourceManager.registerReloadListener(Client.blockyFont);
+
+            VirtueClickGui.start();
             mc.displayGuiScreen(status == Status.SUCCESS ? new ClientMainMenu() : new GuiGameOver());
         }
         boolean hovering = x > 2 && x < 2 + mc.fontRendererObj.getStringWidth("MineSense Forums") && y > height - 12 && y < height - 1;

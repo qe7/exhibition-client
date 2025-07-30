@@ -374,7 +374,7 @@ public class HUD extends Module {
 
         }
 
-        if (isVirtue && clientName.equals("Virtue 6")) {
+        if (clientName.equals("Virtue 6")) {
             RenderingUtil.rectangleBordered(2.0D, 2.0D, 60.0D, 34.0D, 1.0D, -1603704471, -16777216);
             Client.blockyFont.drawStringWithShadow("Virtue 6", (29 - Client.blockyFont.getStringWidth("Virtue 6") / 2D + 2), 4.0D,
                     -4210753, 0.8F);
@@ -780,7 +780,7 @@ public class HUD extends Module {
 
     public boolean isVirtue() {
         String clientName = ((String) settings.get(UGLYGOD).getValue());
-        return (clientName.equals("DREAMTRAPGAY") || clientName.equals("Virtue 6")) && isVirtue;
+        return (clientName.equals("DREAMTRAPGAY") || clientName.equals("Virtue 6"));
     }
 
     private void drawPotionStatus(ScaledResolution sr) {
