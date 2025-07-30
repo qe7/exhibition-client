@@ -74,7 +74,7 @@ public class UUIDResolver {
             Collection<Property> proplist = props.get("textures");
             for (Property prop : proplist) {
                 String textureJson = new String(Base64.getDecoder().decode(prop.getValue()));
-                JsonObject jsonObject = (JsonObject)JsonParser.parseString(textureJson);
+                JsonObject jsonObject = new JsonParser().parse(textureJson).getAsJsonObject();
                 //SkinTextureData skindata = gson.fromJson(textureJson, SkinTextureData.class);
 
                 long timestamp = jsonObject.get("timestamp").getAsLong();
@@ -151,12 +151,17 @@ public class UUIDResolver {
 
             JsonArray jsonArray = new JsonArray();
             for (Map.Entry<String, UUID> entry : names.entrySet()) {
-                jsonArray.add(entry.getKey());
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("name", entry.getKey());
+                jsonObject.addProperty("id", entry.getValue().toString().replace("-", ""));
+                jsonArray.add(jsonObject);
             }
             testConnection.setJson(gson.toJson(jsonArray));
             Connector.post(testConnection);
 
-            JsonArray resultArray = JsonParser.parseString(testConnection.getResponse()).getAsJsonArray();
+            JsonArray resultArray = new JsonParser()
+                    .parse(testConnection.getResponse())
+                    .getAsJsonArray();
 
             long current = System.currentTimeMillis();
             for (JsonElement jsonElement : resultArray) {
@@ -218,7 +223,9 @@ public class UUIDResolver {
                                         Connection pitPandaSearch = new Connection("https://pitpanda.rocks/api/itemsearch/nonce" + nonce);
 
                                         Connector.get(pitPandaSearch);
-                                        JsonObject jsonObject = (JsonObject) JsonParser.parseString(pitPandaSearch.getResponse());
+                                        JsonObject jsonObject = new JsonParser()
+                                                .parse(pitPandaSearch.getResponse())
+                                                .getAsJsonObject();
                                         boolean success = jsonObject.get("success").getAsBoolean();
                                         if (success) {
                                             boolean itemsNull = jsonObject.get("items").isJsonNull();
@@ -230,7 +237,9 @@ public class UUIDResolver {
                                                         String uuid = element.get("owner").getAsString();
                                                         Connection profileConnection = new Connection("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid);
                                                         Connector.get(profileConnection);
-                                                        JsonObject profileJsonObject = (JsonObject) JsonParser.parseString(profileConnection.getResponse());
+                                                        JsonObject profileJsonObject = new JsonParser()
+                                                                .parse(profileConnection.getResponse())
+                                                                .getAsJsonObject();
                                                         responseMap.put(profileConnection.getResponse().hashCode(), System.currentTimeMillis());
 
                                                         if (profileJsonObject.has("name")) {
@@ -308,7 +317,9 @@ public class UUIDResolver {
                                                     Connection pitPandaSearch = new Connection("https://pitpanda.rocks/api/itemsearch/nonce" + nonce);
 
                                                     Connector.get(pitPandaSearch);
-                                                    JsonObject jsonObject = (JsonObject) JsonParser.parseString(pitPandaSearch.getResponse());
+                                                    JsonObject jsonObject = new JsonParser()
+                                                            .parse(pitPandaSearch.getResponse())
+                                                            .getAsJsonObject();
                                                     boolean success = jsonObject.get("success").getAsBoolean();
                                                     if (success) {
                                                         boolean itemsNull = jsonObject.get("items").isJsonNull();
@@ -320,7 +331,9 @@ public class UUIDResolver {
                                                                     String uuid = element.get("owner").getAsString();
                                                                     Connection profileConnection = new Connection("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid);
                                                                     Connector.get(profileConnection);
-                                                                    JsonObject profileJsonObject = (JsonObject) JsonParser.parseString(profileConnection.getResponse());
+                                                                    JsonObject profileJsonObject = new JsonParser()
+                                                                            .parse(profileConnection.getResponse())
+                                                                            .getAsJsonObject();
                                                                     responseMap.put(profileConnection.getResponse().hashCode(), System.currentTimeMillis());
 
                                                                     if (profileJsonObject.has("name")) {
@@ -371,7 +384,9 @@ public class UUIDResolver {
 
                                     Connector.get(hypixelApiConnection);
 
-                                    JsonObject jsonObject = (JsonObject) JsonParser.parseString(response = hypixelApiConnection.getResponse());
+                                    JsonObject jsonObject = new JsonParser()
+                                            .parse(hypixelApiConnection.getResponse())
+                                            .getAsJsonObject();
 
                                     boolean success = jsonObject.get("success").getAsBoolean();
 
@@ -429,7 +444,9 @@ public class UUIDResolver {
                                                     Connection pitPandaSearch = new Connection("https://pitpanda.rocks/api/itemsearch/nonce" + nonce);
 
                                                     Connector.get(pitPandaSearch);
-                                                    JsonObject jsonObject = (JsonObject) JsonParser.parseString(pitPandaSearch.getResponse());
+                                                    JsonObject jsonObject = new JsonParser()
+                                                            .parse(pitPandaSearch.getResponse())
+                                                            .getAsJsonObject();
                                                     boolean success = jsonObject.get("success").getAsBoolean();
                                                     if (success) {
                                                         boolean itemsNull = jsonObject.get("items").isJsonNull();
@@ -441,7 +458,9 @@ public class UUIDResolver {
                                                                     String uuid = element.get("owner").getAsString();
                                                                     Connection profileConnection = new Connection("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid);
                                                                     Connector.get(profileConnection);
-                                                                    JsonObject profileJsonObject = (JsonObject) JsonParser.parseString(profileConnection.getResponse());
+                                                                    JsonObject profileJsonObject = new JsonParser()
+                                                                            .parse(profileConnection.getResponse())
+                                                                            .getAsJsonObject();
                                                                     responseMap.put(username.hashCode(), System.currentTimeMillis());
 
                                                                     if (profileJsonObject.has("name")) {

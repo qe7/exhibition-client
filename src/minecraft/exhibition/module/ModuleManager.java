@@ -156,7 +156,6 @@ public class ModuleManager<E extends Module> extends AbstractManager<Module> {
             add(new Blink(new ModuleData(Movement, "Blink", "Chokes packets while you move.")));
             add(new MoreParticles(new ModuleData(Visuals, "MoreParticles", "Multiplies the amount of attack particles you see.")));
             add(new SimsESP(new ModuleData(Visuals, "SimsESP", "Swebsi Madoo Geelfrob. Renders a Sims thing over peoples heads.")));
-            add(new Spotify(new ModuleData(Other, "Spotify", "Shows currently playing song on Spotify. (Credits to Alerithe HTTP Server)")));
             add(new PlayPause(new ModuleData(Other, "Play/Pause", "Bind this to toggle Spotify playback.")));
             add(new Bypass(new ModuleData(Combat, "Bypass", "Old Bypass module.")));
             add(new LightningLog(new ModuleData(Other, "LightningLog", "Prints out the coordinates of lightning.")));
@@ -181,14 +180,8 @@ public class ModuleManager<E extends Module> extends AbstractManager<Module> {
 
             add(new MotionPrediction(new ModuleData(Movement, "Joe", "")));
 
-            if (Boolean.parseBoolean((String) (Class.forName("java.lang.System").getMethod("getProperty", String.class)).invoke(null, "NEoBuMASs"))) {
-                add(new Aimbot(new ModuleData(Minigames, "Aimbot", "Cops n Crims aimbot.")));
-            }
-
-            if (Boolean.parseBoolean((String) (Class.forName("java.lang.System").getMethod("getProperty", String.class)).invoke(null, "NEoBuMASs"))
-                    && Boolean.parseBoolean((String) (Class.forName("java.lang.System").getMethod("getProperty", String.class)).invoke(null, "nEoSuCKsBruhReallyNeighbor"))) {
-                add(new ZombieAim(new ModuleData(Minigames, "ZombieAim", "Aimbot for Hypixel Zombies.")));
-            }
+            add(new Aimbot(new ModuleData(Minigames, "Aimbot", "Cops n Crims aimbot.")));
+            add(new ZombieAim(new ModuleData(Minigames, "ZombieAim", "Aimbot for Hypixel Zombies.")));
 
             //add(new AutoSkin(new ModuleData(Other, "AutoSkin", "Automatically applies a skin when you log into an alt.")));
             //add(new LagExploit(new ModuleData(Movement, "LagExploit", "")));

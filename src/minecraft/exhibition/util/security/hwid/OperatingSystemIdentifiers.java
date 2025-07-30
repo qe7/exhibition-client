@@ -10,8 +10,8 @@ public class OperatingSystemIdentifiers implements Identifier {
 
     public OperatingSystemIdentifiers(OperatingSystem os) {
         this.family = trim(os.getFamily());
-        this.version = trim(os.getVersionInfo().getVersion());
-        this.build = trim(os.getVersionInfo().getBuildNumber());
+        this.version = trim(os.getVersion().getVersion());
+        this.build = trim(os.getVersion().getBuildNumber());
     }
 
     public String getFamily() {

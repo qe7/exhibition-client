@@ -51,7 +51,6 @@ import exhibition.gui.screen.impl.mainmenu.GuiLoginMenu;
 import exhibition.management.GlobalValues;
 import exhibition.management.keybinding.KeyHandler;
 import exhibition.module.impl.hud.HUD;
-import exhibition.module.impl.other.Spotify;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -1995,13 +1994,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         this.mcProfiler.endStartSection("spotify");
-        if (Spotify.spotifyManager != null) {
-            try {
-                Spotify.spotifyManager.onEvent();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
         this.mcProfiler.endSection();
         this.systemTime = getSystemTime();
     }

@@ -1,7 +1,6 @@
 package io.github.alerithe.spotify;
 
 import exhibition.Client;
-import exhibition.module.impl.other.Spotify;
 import io.github.alerithe.spotify.components.Request;
 
 import java.io.IOException;
@@ -56,27 +55,6 @@ public class LocalSpotifyServer {
         if (!LISTENING) {
             LISTENING = true;
 
-            new Thread(() -> {
-                while (LISTENING && Client.getModuleManager().isEnabled(Spotify.class)) {
-                    try {
-                        try (Request request = new Request(serverSocket.accept())) {
-                            if (request.path.startsWith(LocalSpotifyServer.CALLBACK_PATH)) {
-                                if (request.query.startsWith("code=")) {
-                                    LocalSpotifyServer.AUTHENTICATION_CODE = request.query.substring(5);
-                                    LocalSpotifyServer.stop();
-                                    request.write("HTTP/1.1 200 OK\n\nSpotify is now linked!\nYou may now close this tab.");
-                                } else {
-                                    request.write("HTTP/1.1 400 Bad Request\n\nNo authentication code.");
-                                }
-                            } else {
-                                request.write("HTTP/1.1 401 Forbidden\n\nNon-callback resource access attempt.");
-                            }
-                        }
-                    } catch (Exception e) {
-                        // This can be ignored
-                    }
-                }
-            }).start();
         } else {
             throw new RuntimeException("Local Spotify server is already listening!");
         }

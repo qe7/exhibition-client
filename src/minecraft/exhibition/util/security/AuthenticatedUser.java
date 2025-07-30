@@ -130,14 +130,6 @@ public class AuthenticatedUser extends Castable {
                     + hardwareIdentification.systemIdentifiers.getModel()
                     + hardwareIdentification.systemIdentifiers.getSerial();
 
-            for (DisplayIdentifiers.DisplayContainer displayContainer : hardwareIdentification.displayIdentifiers.getDisplayContainers()) {
-                check += displayContainer.getSerial();
-            }
-
-            for (DiskIdentifiers.DiskContainer diskContainer : hardwareIdentification.diskIdentifiers.getDiskContainers()) {
-                check += diskContainer.getSerial();
-            }
-
             if (BCrypt.checkpw(check, hwidHash).detected)
                 return;
         } catch (Exception e) {

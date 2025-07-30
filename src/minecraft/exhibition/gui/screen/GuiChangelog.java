@@ -10,6 +10,7 @@ import exhibition.util.render.Depth;
 import exhibition.util.security.Connection;
 import exhibition.util.security.SSLConnector;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -234,7 +235,7 @@ public class GuiChangelog extends PanoramaScreen {
     @Override
     protected void actionPerformed(final GuiButton button) {
         if (button.id == 0 && button.enabled) {
-            mc.displayGuiScreen(new GuiLoginMenu(false));
+            mc.displayGuiScreen(new GuiLoginMenu(true));
         }
     }
 

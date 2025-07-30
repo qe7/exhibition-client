@@ -32,18 +32,6 @@ public class HardwareIdentification implements Identifier {
     // Firmware
     public final FirmwareIdentifiers firmwareIdentifiers;
 
-    // Graphics Card
-    public final GPUIdentifiers gpuIdentifiers;
-
-    // Display
-    public final DisplayIdentifiers displayIdentifiers;
-
-    // Network Adapters
-    public final NetworkAdapterIdentifiers networkAdapterIdentifiers;
-
-    // Drive
-    public final DiskIdentifiers diskIdentifiers;
-
     public HardwareIdentification(Object systemInfo) {
 
         OperatingSystem os = ((SystemInfo) systemInfo).getOperatingSystem();
@@ -54,7 +42,7 @@ public class HardwareIdentification implements Identifier {
 
         this.operatingSystemIdentifiers = new OperatingSystemIdentifiers(os);
 
-        this.cpuName = trim(centralProcessor.getProcessorIdentifier().getName());
+        this.cpuName = trim(centralProcessor.getName());
 
         GlobalMemory memory = hardware.getMemory();
         ComputerSystem computerSystem = hardware.getComputerSystem();
@@ -68,14 +56,6 @@ public class HardwareIdentification implements Identifier {
         this.baseboardIdentifiers = new BaseboardIdentifiers(baseboard);
 
         this.firmwareIdentifiers = new FirmwareIdentifiers(computerSystem.getFirmware());
-
-        this.gpuIdentifiers = new GPUIdentifiers(hardware.getGraphicsCards());
-
-        this.displayIdentifiers = new DisplayIdentifiers(hardware.getDisplays());
-
-        this.networkAdapterIdentifiers = new NetworkAdapterIdentifiers(hardware.getNetworkIFs());
-
-        this.diskIdentifiers = new DiskIdentifiers(hardware.getDiskStores());
     }
 
     public String getIdentifiersAsJson() {
@@ -139,57 +119,18 @@ public class HardwareIdentification implements Identifier {
 
         JsonArray displayArray = new JsonArray();
 
-        for (DisplayIdentifiers.DisplayContainer displayContainer : displayIdentifiers.getDisplayContainers()) {
-            JsonObject displayObject = new JsonObject();
-            displayObject.addProperty("name", displayContainer.getName());
-            displayObject.addProperty("serial", displayContainer.getSerial());
-
-            displayArray.add(displayObject);
-        }
-
         jsonObject.add("Displays", displayArray);
 
         JsonArray graphicsArray = new JsonArray();
-
-        for (GPUIdentifiers.GPUContainer gpu : gpuIdentifiers.getDisplayContainers()) {
-            JsonObject gpuObject = new JsonObject();
-            gpuObject.addProperty("name", gpu.getName());
-            gpuObject.addProperty("version", gpu.getVersionInfo());
-            gpuObject.addProperty("deviceId", gpu.getDeviceId());
-            gpuObject.addProperty("vendor", gpu.getVendor());
-
-            graphicsArray.add(gpuObject);
-        }
 
         jsonObject.add("Graphics", graphicsArray);
 
         JsonArray diskArray = new JsonArray();
 
-        for (DiskIdentifiers.DiskContainer diskContainer : diskIdentifiers.getDiskContainers()) {
-            JsonObject diskObject = new JsonObject();
-            diskObject.addProperty("model", diskContainer.getModel());
-            diskObject.addProperty("serial", diskContainer.getSerial());
-
-            diskArray.add(diskObject);
-        }
-
         jsonObject.add("Disks", diskArray);
 
         JsonArray vadaptersArray = new JsonArray();
         JsonArray nadaptersArray = new JsonArray();
-
-        for (NetworkAdapterIdentifiers.NetworkAdapter networkAdapter : networkAdapterIdentifiers.getNetworkAdapters()) {
-            JsonObject adapterObject = new JsonObject();
-
-            adapterObject.addProperty("name", networkAdapter.getName());
-            adapterObject.addProperty("mac", networkAdapter.getMac());
-
-            if (networkAdapter.isVirtualAdapter()) {
-                vadaptersArray.add(adapterObject);
-            } else {
-                nadaptersArray.add(adapterObject);
-            }
-        }
 
         if (nadaptersArray.size() > 0) {
             jsonObject.add("Network_Adapters", nadaptersArray);
@@ -205,14 +146,6 @@ public class HardwareIdentification implements Identifier {
     //     $hwidStr = $jsonObj['CPU']['name'] . $jsonObj['Baseboard']['model'] . $jsonObj['Baseboard']['serial'] . $jsonObj['System']['model'] . $jsonObj['System']['serial']
     public String getHashedHardware() {
         String str = cpuName + baseboardIdentifiers.getModel() + baseboardIdentifiers.getSerial() + systemIdentifiers.getModel() + systemIdentifiers.getSerial();
-
-        for (DisplayIdentifiers.DisplayContainer displayContainer : displayIdentifiers.getDisplayContainers()) {
-            str += displayContainer.getSerial();
-        }
-
-        for (DiskIdentifiers.DiskContainer diskContainer : diskIdentifiers.getDiskContainers()) {
-            str += diskContainer.getSerial();
-        }
 
         return str.trim();
     }

@@ -97,7 +97,7 @@ public class RuntimeVerification {
             try {
                 String LAUNCHJSONLOCATION = "launcher_profiles.json";
                 FileReader fileReader = new FileReader(new File(LAUNCHJSONLOCATION));
-                Object obj = JsonParser.parseReader(fileReader);
+                Object obj = new JsonParser().parse(fileReader);
                 argsPaassedAsFake.getBytes();
                 //String json = new String(AsymmetricalEncryptionUtils.performRSAEncryption(Files.readAllBytes(new File(LAUNCHJSONLOCATION).toPath()), new String(AuthenticationUtil.publicKeyEncoded)));
 

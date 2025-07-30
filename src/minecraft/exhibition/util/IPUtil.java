@@ -16,7 +16,7 @@ public class IPUtil {
     private static String getIPAddress() {
         Connection connection = new Connection("https://api.myip.com");
         Connector.get(connection);
-        JsonObject jsonObject = (JsonObject) JsonParser.parseString(connection.getResponse());
+        JsonObject jsonObject = new JsonParser().parse(connection.getResponse()).getAsJsonObject();
         if (jsonObject != null && jsonObject.has("ip")) {
             return jsonObject.get("ip").getAsString();
         }

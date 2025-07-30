@@ -301,7 +301,7 @@ public class OpenGlHelper
         try
         {
             CentralProcessor processor = (new SystemInfo()).getHardware().getProcessor();
-            field_183030_aa = processor.getProcessorIdentifier().getName();
+            field_183030_aa = processor.getProcessorID();
         }
         catch (Throwable var3)
         {

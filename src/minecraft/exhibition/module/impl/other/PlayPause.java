@@ -15,9 +15,6 @@ public class PlayPause extends Module {
     }
 
     public void onEnable() {
-        if(Spotify.spotifyManager != null && Spotify.spotifyManager.isConnected()) {
-            Spotify.spotifyManager.pauseSong();
-        }
         toggle();
     }
 

@@ -2,7 +2,6 @@ package exhibition.management.command;
 
 import exhibition.management.command.impl.*;
 import exhibition.util.security.AuthenticationUtil;
-import org.sun.verification.Unknown;
 
 import java.util.Collection;
 import java.util.HashMap;

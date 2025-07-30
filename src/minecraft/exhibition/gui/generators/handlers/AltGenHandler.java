@@ -74,7 +74,7 @@ public class AltGenHandler {
         SSLConnector.get(connection);
         if (connection.getResponse().contains("error"))
             return false;
-        JsonObject jo = JsonParser.parseString(connection.getResponse()).getAsJsonObject();
+        JsonObject jo = new JsonParser().parse(connection.getResponse()).getAsJsonObject();
         this.user = new AltGenUser(jo.get("username").getAsString(), jo.get("avatar").getAsString(), jo.get("active_plan").getAsString());
         return true;
     }
@@ -85,7 +85,7 @@ public class AltGenHandler {
         if (connection.getResponse().contains("error"))
             return "Error while generating alt!";
         if(connection.getResponse().contains("email")) {
-            JsonObject jo = JsonParser.parseString(connection.getResponse()).getAsJsonObject();
+            JsonObject jo = new JsonParser().parse(connection.getResponse()).getAsJsonObject();
             return jo.get("email").getAsString() + ":" + jo.get("password").getAsString();
         }
         return "Could not generate alt!";

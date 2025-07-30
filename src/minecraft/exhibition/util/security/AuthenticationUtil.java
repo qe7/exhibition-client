@@ -100,7 +100,7 @@ public class AuthenticationUtil {
                     jsonObject.addProperty("username", URLDecoder.decode(username, "UTF-8"));
                     jsonObject.addProperty("password", URLDecoder.decode(password, "UTF-8"));
 
-                    jsonObject.add("identifiers", JsonParser.parseString(hwidJson));
+                    jsonObject.add("identifiers", new JsonParser().parse(hwidJson).getAsJsonObject());
 
                     connection.setJson(encryptAES(new Gson().toJson(jsonObject)));
 

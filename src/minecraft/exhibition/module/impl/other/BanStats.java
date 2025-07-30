@@ -116,7 +116,9 @@ public class BanStats extends Module {
                     try {
                         Connector.get(hypixelApiConnection);
                         String response = hypixelApiConnection.getResponse();
-                        JsonObject jsonObject = (JsonObject) JsonParser.parseString(response);
+                        JsonObject jsonObject = new JsonParser()
+                                .parse(response)
+                                .getAsJsonObject();
 
                         boolean success = jsonObject.has("success") && jsonObject.get("success").getAsBoolean();
 
